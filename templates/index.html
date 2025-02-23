@@ -1,0 +1,68 @@
+{% extends "import.html" %} 
+{% block content %}
+
+<center>
+    <div class="container mt-5">
+        <h2 class="display-4">Brain Tumor Classification Using Deep Learning</h2>
+        <p class="lead">Upload an image of a brain scan to classify if it has a tumor or not using our deep learning model.</p>
+
+        <form id="upload-file" method="post" enctype="multipart/form-data">
+            <div class="custom-file mb-3">
+                <input type="file" name="file" class="custom-file-input" id="imageUpload" accept=".png, .jpg, .jpeg">
+                <label class="custom-file-label" for="imageUpload">Choose file</label>
+            </div>
+        </form>
+
+        <div class="image-section mt-4" style="display:none;">
+            <img id="imagePreview" class="img-fluid rounded shadow" src="#" alt="Image Preview" style="max-width: 100%; height: auto;"/>
+            <br><br>
+            <button type="button" class="btn btn-info btn-lg" id="btn-predict">Predict!</button>
+        </div>
+
+        <div class="loader mt-4" style="display:none;">
+            <div class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <h3 id="result" class="mt-4">
+            <span></span>
+        </h3>
+    </div>
+</center>
+
+<script>
+document.getElementById('imageUpload').onchange = function (event) {
+    let reader = new FileReader();
+    reader.onload = function () {
+        let imagePreview = document.getElementById('imagePreview');
+        imagePreview.src = reader.result;
+        document.querySelector('.image-section').style.display = 'block';
+    }
+    reader.readAsDataURL(event.target.files[0]);
+};
+
+document.getElementById('btn-predict').onclick = function () {
+    document.querySelector('.loader').style.display = 'block';
+    document.getElementById('result').style.display = 'none';
+    
+    let formData = new FormData();
+    formData.append('file', document.getElementById('imageUpload').files[0]);
+
+    fetch('/predict', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.querySelector('.loader').style.display = 'none';
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').innerHTML = '<span>' + data.result + '</span>';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+</script>
+
+{% endblock %}

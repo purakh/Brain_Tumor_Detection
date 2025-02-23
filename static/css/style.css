@@ -1,0 +1,300 @@
+:root {
+    --primary-bg-color: #39424E;
+    --primary-border-color: rgb(57, 66, 125);
+    --primary-text-color: white;
+    --secondary-bg-color: #222222;
+    --secondary-text-color: white;
+    --hover-bg-color: #2EC866;
+    --button-bg-color: #449D44;
+    --button-hover-bg-color: #286090;
+    --button-text-color: white;
+    --loader-bg-color: #EEEEEE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.area {
+    margin: 0;
+    padding: 0;
+}
+
+.sign {
+    margin-top: 300px;
+}
+
+.main {
+    margin: 30px 20px;
+}
+
+.bar {
+    background-color: var(--primary-bg-color);
+    border-radius: 4px;
+    min-height: 20px;
+    padding: 8px;
+    border: 3px solid var(--primary-border-color);
+    color: var(--primary-text-color);
+}
+
+.ubar {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.space {
+    padding: 0 15px 0 1px;
+    color: var(--primary-text-color);
+    transition: border-bottom 0.3s ease;
+}
+
+.space:hover {
+    border-bottom: 5px solid var(--hover-bg-color);
+}
+
+.lspace {
+    padding: 0 150px 0 100px;
+}
+
+.nbar {
+    min-height: 68px;
+    padding-top: 10px;
+    color: var(--primary-text-color);
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.ispace {
+    padding-right: 8px;
+    font-size: 15px;
+}
+
+.lgspace {
+    margin-left: 200px;
+}
+
+.log {
+    margin: 100px 0 0 100px;
+}
+
+.cspace {
+    margin: 70px 0 0 100px;
+}
+
+.foot {
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+    padding: 30px 0;
+    text-align: center;
+}
+
+.fm {
+    margin-left: 100px;
+}
+
+.fspace {
+    margin-left: 200px;
+}
+
+.wdiv {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    text-align: center;
+}
+
+.pb, .pc {
+    border: 1px solid gray;
+    padding: 6px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    max-width: 500px;
+    text-align: center;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    transition: background-color 0.3s ease;
+}
+
+.pb:hover, .pc:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+.pb:a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.pbs {
+    margin-left: 35px;
+}
+
+.contain {
+    margin: 50px 0 0 90px;
+}
+
+.tm {
+    margin: 100px 0 0 135px;
+}
+
+.pw {
+    max-width: 900px;
+}
+
+.con {
+    margin-left: 270px;
+}
+
+.xm, .xmm {
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.cpl {
+    text-align: center;
+}
+
+.ym {
+    padding: 0;
+    border: 1px solid gray;
+    border-radius: 0;
+    margin-bottom: 10px;
+}
+
+pre {
+    background-color: var(--loader-bg-color);
+    font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
+    margin-bottom: 10px;
+    max-height: 600px;
+    overflow: auto;
+    padding: 5px;
+    width: auto;
+    white-space: pre;
+}
+
+.centered {
+    padding-right: 70px;
+}
+
+@media only screen and (max-width: 1334px) and (min-width: 1010px) {
+    .lspace {
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .lgspace {
+        margin-left: 30px;
+    }
+}
+
+@media only screen and (max-width: 845px) and (min-width: 769px) {
+    .lspace {
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .lgspace {
+        margin-left: 5px;
+    }
+
+    .ispace {
+        padding-right: 4px;
+        font-size: 10px;
+    }
+
+    .cspace {
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 770px) and (min-width: 200px) {
+    .main {
+        margin: 0;
+    }
+
+    .navbar-fixed-top {
+        position: relative;
+    }
+
+    .lspace {
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .lgspace {
+        margin-left: 5px;
+    }
+
+    .ispace {
+        padding-right: 4px;
+        font-size: 10px;
+    }
+
+    .cspace {
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 199px) and (min-width: 50px) {
+    .main {
+        margin: 0;
+    }
+
+    .lspace {
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .lgspace {
+        margin-left: 5px;
+    }
+
+    .ispace {
+        padding-right: 4px;
+        font-size: 10px;
+    }
+
+    .cspace {
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 1010px) and (min-width: 846px) {
+    .main {
+        margin: 0;
+    }
+
+    .cspace {
+        padding-right: 50px;
+    }
+
+    .pbs {
+        margin-right: 0;
+    }
+
+    .navbar-fixed-top {
+        position: relative;
+    }
+
+    .lgspace {
+        margin-left: 10px;
+    }
+
+    .lspace {
+        padding: 0 20px;
+        text-align: center;
+    }
+}
