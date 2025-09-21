@@ -13,9 +13,9 @@ for real-time predictions.
 
 Screenshots:
 
-<img src="./Screenshots/s1.png" alt="Home Page" width="500"/>
+<img src="./Screenshots/s1.png" alt="Home Page" width="700"/>
 
-<img src="./Screenshots/s2.png" alt="Home Page" width="500"/>
+<img src="./Screenshots/s2.png" alt="Home Page" width="700"/>
 
 
 ## 🛠️ Tech Stack
