@@ -1,65 +1,62 @@
-import os
-import numpy as np
-from PIL import Image
+from flask import Flask, render_template, request
+from tensorflow.keras.models import load_model
 import cv2
-from keras.models import load_model
-from flask import Flask, request, render_template
-from werkzeug.utils import secure_filename
+import numpy as np
+import os
+from PIL import Image,UnidentifiedImageError
 
 app = Flask(__name__)
 
-# Load the model
-model = load_model('BrainTumor10EpochsCategorical.h5')
-print('Model loaded. Check http://127.0.0.1:5000/')
+# Load models
+valid_mri_model = load_model('models/valid_mri_64x64.h5')
+tumor_model = load_model('models/BrainTumor10EpochsCategorical.h5')
 
-def get_className(classNo):
-    if classNo == 0:
-        return "No Brain Tumor"
-    elif classNo == 1:
-        return "Yes Brain Tumor"
-        
+INPUT_SIZE_VALID = 64
+INPUT_SIZE_TUMOR = 64
 
+def preprocess_image(img_path, target_size):
+    try:
+        image = Image.open(img_path).convert("RGB")
+    except UnidentifiedImageError:
+        raise ValueError("Uploaded file is not a valid image.")
+    
+    image = image.resize((target_size, target_size))
+    image = np.array(image) / 255.0
+    image = np.expand_dims(image, axis=0)
+    return image
 
-def getResult(img_path):
-    image = cv2.imread(img_path)
-    image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    image = image.resize((64, 64))
-    image = np.array(image)
-    input_img = np.expand_dims(image, axis=0)
-    result = model.predict(input_img)
-    class_index = np.argmax(result, axis=1)[0]
-    return class_index
-
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/predict', methods=['GET', 'POST'])
-def upload():
-    if request.method == 'POST':
-        f = request.files['file']
-        
-        basepath = os.path.dirname(__file__)
-        upload_path = os.path.join(basepath, 'uploads')
-        os.makedirs(upload_path, exist_ok=True)
-        
-        file_path = os.path.join(upload_path, secure_filename(f.filename))
-        
-        # Check if file already exists and rename if necessary
-        if os.path.exists(file_path):
-            base, extension = os.path.splitext(file_path)
-            i = 1
-            new_file_path = f"{base}_{i}{extension}"
-            while os.path.exists(new_file_path):
-                i += 1
-                new_file_path = f"{base}_{i}{extension}"
-            file_path = new_file_path
-        
-        f.save(file_path)
-        value = getResult(file_path)
-        result = get_className(value)
-        return result
-    return None
+@app.route('/predict', methods=['POST'])
+def predict():
+    if 'file' not in request.files:
+        return "No file part", 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return "No selected file", 400
+
+    filepath = os.path.join("static", file.filename)
+    file.save(filepath)
+
+    # Step 1: Check if it's a valid MRI
+    valid_input = preprocess_image(filepath, INPUT_SIZE_VALID)
+    validity = valid_mri_model.predict(valid_input)[0][0]
+
+    if validity < 0.5:
+        os.remove(filepath)
+        return "Please upload a valid brain MRI scan.", 400
+
+    # Step 2: Predict tumor classification
+    tumor_input = preprocess_image(filepath, INPUT_SIZE_TUMOR)
+    prediction = tumor_model.predict(tumor_input)[0]
+
+    classes = ['No Tumor', 'Tumor']
+    result = classes[np.argmax(prediction)]
+
+    return result
 
 if __name__ == '__main__':
     app.run(debug=True)
