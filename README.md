@@ -11,6 +11,13 @@ for real-time predictions.
 - 📂 **Upload MRI Images** – Users can upload MRI scans via the Flask web app.  
 - ⚡ **Real-time Predictions** – Instant results with probabilities.
 
+Screenshots:
+
+<img src="./Screenshots/s1.png" alt="Home Page" width="500"/>
+
+<img src="./Screenshots/s2.png" alt="Home Page" width="500"/>
+
+
 ## 🛠️ Tech Stack
 
 - **Language:** Python  
